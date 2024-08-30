@@ -24,7 +24,7 @@ const links = [
 ]
 const Footer = () => {
   return (
-    <div className="mt-8 flex flex-wrap items-center gap-2">
+    <div className="mt-8 flex flex-wrap items-center gap-2 rounded bg-secondary p-4">
       {links.map((link, index) => (
         <Link
           key={index}
