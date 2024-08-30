@@ -20,18 +20,6 @@ interface AvailableItem {
 
 export const availableItems: AvailableItem[] = [
   {
-    productName: "Sofa",
-    slug: "sofa",
-    postedBy: "John Doe",
-    province: "Nampula",
-    photos: [
-      "https://m.media-amazon.com/images/I/818ukAwnrKL._AC_UF894,1000_QL80_.jpg",
-      "https://www.housingunits.co.uk/media/catalog/product/cache/60968cec045f20fb06ab5f7720001507/a/d/ad3ec91cb8832946abbdc75686b5908b.jpg",
-    ],
-    description: "Comfortable 3-seater sofa in great condition.",
-    offer: false,
-  },
-  {
     productName: "Gaming Chair",
     slug: "gaming-chair",
     postedBy: "Jane Smith",
@@ -43,6 +31,47 @@ export const availableItems: AvailableItem[] = [
     description: "Ergonomic gaming chair with adjustable armrests.",
     offer: true,
   },
+  {
+    productName: 'Air Jordan 13 Retro “Island Green"',
+    slug: "air-jordan-13",
+    postedBy: "John Doe",
+    province: "Nampula",
+    photos: [
+      "https://superrep.is/wp-content/uploads/2023/10/2931ca32.jpg",
+      "https://premiersneakergallery.com/cdn/shop/products/img27_5_c7faf036-23e3-4515-8292-a2e75840aa62_750x.jpg?v=1672788261",
+      "https://globalnykicks.com/cdn/shop/products/d1_d1623c86-05f6-4bff-a014-4a00f452b6cd_960x.png?v=1574072928",
+    ],
+    description: 'Air Jordan 13 Retro “Island Green"',
+    offer: true,
+  },
+  {
+    productName: "JoyStick PS5 Dual Sense – Tech 4U",
+    slug: "joystick",
+    postedBy: "John Doe",
+    province: "Nampula",
+    photos: [
+      "https://tech4u.co.mz/wp-content/uploads/2024/05/Untitled-4-01-1.jpg",
+      "https://5.imimg.com/data5/SELLER/Default/2022/6/AY/LB/CP/22794873/ps5-style-ps-5-4-ps4-wireless-game-pc-ps4-joystick-ps5-controller-500x500.jpg",
+      "https://lablaab.com/wp-content/uploads/2021/05/5.5.jpg.f23a0629c6.989x800x800.jpg",
+    ],
+    description:
+      "JoyStick PS5 Dual Sense, aceito troca com um joystick do XBOX 360.",
+    offer: false,
+  },
+
+  {
+    productName: "Sofa",
+    slug: "sofa",
+    postedBy: "John Doe",
+    province: "Nampula",
+    photos: [
+      "https://m.media-amazon.com/images/I/818ukAwnrKL._AC_UF894,1000_QL80_.jpg",
+      "https://www.housingunits.co.uk/media/catalog/product/cache/60968cec045f20fb06ab5f7720001507/a/d/ad3ec91cb8832946abbdc75686b5908b.jpg",
+    ],
+    description: "Comfortable 3-seater sofa in great condition.",
+    offer: false,
+  },
+
   {
     productName: "Google Pixel 2",
     slug: "google-pixel-2",
