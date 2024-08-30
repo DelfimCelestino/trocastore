@@ -2,7 +2,11 @@ import Link from "next/link"
 
 const links = [
   {
-    name: "TOdos direitos reservados@DenyCelestino",
+    name: "Todos direitos reservados",
+    href: "https://delfim.vercel.app",
+  },
+  {
+    name: "Deny Celestino",
     href: "https://delfim.vercel.app",
   },
   {
