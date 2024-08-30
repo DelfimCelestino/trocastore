@@ -27,8 +27,8 @@ const Home = ({ params }: { params: { query: string } }) => {
       {/* <QuickSearchComponent /> */}
       <p className="my-4 text-sm text-gray-400">Resutados para: {query}</p>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {results.map((item) => (
-          <CardProduct item={item} />
+        {results.map((item, index) => (
+          <CardProduct key={index} item={item} />
         ))}
       </div>
     </div>
