@@ -15,6 +15,7 @@ interface AvailableItem {
   province: string
   photos: string[]
   description: string
+  offer: boolean
 }
 
 export const availableItems: AvailableItem[] = [
@@ -28,6 +29,7 @@ export const availableItems: AvailableItem[] = [
       "https://www.housingunits.co.uk/media/catalog/product/cache/60968cec045f20fb06ab5f7720001507/a/d/ad3ec91cb8832946abbdc75686b5908b.jpg",
     ],
     description: "Comfortable 3-seater sofa in great condition.",
+    offer: false,
   },
   {
     productName: "Gaming Chair",
@@ -39,6 +41,7 @@ export const availableItems: AvailableItem[] = [
       "https://workspace.com.pk/wp-content/uploads/2023/03/gaming-chair-post-07-700x700-1.jpg",
     ],
     description: "Ergonomic gaming chair with adjustable armrests.",
+    offer: true,
   },
   {
     productName: "Google Pixel 2",
@@ -50,6 +53,7 @@ export const availableItems: AvailableItem[] = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNqrhTX2e8IddEe3aQC9Ddj_mrwDcYDkcPxA&s",
     ],
     description: "Google Pixel 2 in excellent condition, includes charger.",
+    offer: true,
   },
   {
     productName: "Iphone 13 Pro Max",
@@ -60,6 +64,7 @@ export const availableItems: AvailableItem[] = [
       "https://www.coolmatica.pt/store/204932-large_default/smartphone-apple-iphone-13-pro-max-17-cm-67-dual-sim-ios-15-5g-128gb-prateado.jpg",
     ],
     description: "Iphone 13 Pro Max, like new, 256GB storage.",
+    offer: false,
   },
   {
     productName: "Notebook",
@@ -71,5 +76,6 @@ export const availableItems: AvailableItem[] = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAw8e_5RulD2CCXK-48iN-Mp2PaBcHEFweqQ&s",
     ],
     description: "Dell Inspiron notebook, 16GB RAM, 512GB SSD.",
+    offer: false,
   },
 ]

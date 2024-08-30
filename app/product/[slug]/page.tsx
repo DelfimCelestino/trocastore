@@ -12,6 +12,8 @@ import {
 import React from "react"
 import { notFound } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 const Product = ({ params }: { params: { slug: string } }) => {
   const [api, setApi] = React.useState<CarouselApi>()
@@ -66,13 +68,26 @@ const Product = ({ params }: { params: { slug: string } }) => {
       </div>
       <div className="p-4">
         <div>
-          <Button className="w-full uppercase" variant={"outline"}>
-            Solicitar troca
+          <Button
+            className={cn(
+              "w-full uppercase",
+              product.offer && "bg-green-500 hover:bg-green-500",
+            )}
+            variant={"outline"}
+          >
+            {product.offer ? "Solicitar Ofertar" : "Solicitar troca"}
           </Button>
         </div>
         <div className="mt-4">
           <p className="text-xs text-gray-500">Posted by: {product.postedBy}</p>
           <p className="text-xs text-gray-500">Location: {product.province}</p>
+          <div className="bg-oraange-500 my-4 rounded p-4">
+            <p className="text-xs">
+              O proprietário de {product.productName} esta ofertando esse
+              produto, ou seja o produto esta disponível para ser entregue sem
+              alguma troca
+            </p>
+          </div>
         </div>
         <h1 className="text-xl font-bold lg:text-2xl">{product.productName}</h1>
         <p className="mt-2 text-sm text-gray-600">{product.description}</p>

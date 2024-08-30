@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/carousel"
 import Link from "next/link"
 import { MapPin } from "lucide-react"
+import { Badge } from "./ui/badge"
 interface AvailableItem {
   productName: string
   slug: string
@@ -18,6 +19,7 @@ interface AvailableItem {
   province: string
   photos: string[]
   description: string
+  offer: boolean
 }
 const CardProduct = ({ item }: { item: AvailableItem }) => {
   const [api, setApi] = React.useState<CarouselApi>()
@@ -72,6 +74,11 @@ const CardProduct = ({ item }: { item: AvailableItem }) => {
                 ? item.description.substring(0, 56) + "..."
                 : item.description}
             </p>
+            {item.offer && (
+              <div>
+                <Badge className="bg-green-500 text-zinc-50">Ofertando</Badge>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
