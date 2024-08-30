@@ -81,7 +81,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
         <div className="mt-4">
           <p className="text-xs text-gray-500">Posted by: {product.postedBy}</p>
           <p className="text-xs text-gray-500">Location: {product.province}</p>
-          <div className="bg-oraange-500 my-4 rounded p-4">
+          <div className="my-4 rounded bg-orange-500 p-4">
             <p className="text-xs">
               O proprietário de {product.productName} esta ofertando esse
               produto, ou seja o produto esta disponível para ser entregue sem
