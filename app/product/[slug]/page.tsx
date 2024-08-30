@@ -54,7 +54,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
             ))}
           </CarouselContent>
           {product.photos.length > 1 && (
-            <div className="absolute right-2 top-2 rounded bg-black/80 p-2 text-sm text-white">
+            <div className="absolute right-2 top-2 rounded bg-black/80 p-2 text-xs text-muted-foreground">
               {current} de {count}
             </div>
           )}
