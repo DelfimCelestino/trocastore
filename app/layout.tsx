@@ -3,6 +3,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Bottomtab from "@/components/bottom-tab"
 import Header from "@/components/header"
+import AuthProvider from "@/providers/auth"
 
 export const metadata: Metadata = {
   title: "TrocaStore",
@@ -17,16 +18,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          <main className="pb-16 pt-16 lg:pb-0">{children}</main>
-          <Bottomtab />
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            <main className="pb-16 pt-16 lg:pb-0">{children}</main>
+            <Bottomtab />
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   )
