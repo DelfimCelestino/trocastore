@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress"
 import { useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
+import Editor from "@/components/editor"
 
 const post = [
   "https://techrecomenda.com/wp-content/uploads/2024/06/Design-sem-nome-12.jpg",
@@ -17,6 +18,7 @@ const post = [
 const Post = () => {
   const [progress, setProgress] = useState(50)
   const [iamgeUrl, setImageUrl] = useState("")
+  const [text, setText] = useState("")
 
   const [images, setImages] = useState<string[]>(post)
 
@@ -91,11 +93,12 @@ const Post = () => {
           </>
         ) : (
           <>
-            <p>Descreva o seu item, condições etc...</p>
-            <Textarea
+            <p className="text-sm">Descreva o seu item, condições etc...</p>
+            <Editor text={text} setText={setText} />
+            {/* <Textarea
               className="min-h-[200px] w-full"
               placeholder="Descreva o seu item..."
-            />
+            /> */}
           </>
         )}
       </div>
