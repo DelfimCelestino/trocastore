@@ -41,7 +41,7 @@ const CardProduct = ({ item }: { item: AvailableItem }) => {
 
   return (
     <Link href={`/product/${encodeURIComponent(item.slug)}`}>
-      <Card className="flex min-h-[350px] w-full max-w-sm flex-col lg:min-h-[480px]">
+      <Card className="flex min-h-[350px] w-full max-w-sm flex-col border-none lg:min-h-[480px]">
         <Carousel setApi={setApi} className="relative w-full">
           <CarouselContent>
             {item.photos.map((item, index) => (
