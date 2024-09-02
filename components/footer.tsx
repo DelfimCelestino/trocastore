@@ -2,14 +2,6 @@ import Link from "next/link"
 
 const links = [
   {
-    name: "Todos direitos reservados",
-    href: "https://delfim.vercel.app",
-  },
-  {
-    name: "Deny Celestino",
-    href: "https://delfim.vercel.app",
-  },
-  {
     name: "Termos e condições",
     href: "/terms",
   },
@@ -24,16 +16,22 @@ const links = [
 ]
 const Footer = () => {
   return (
-    <div className="mt-8 flex flex-wrap items-center gap-2 rounded bg-secondary p-4">
-      {links.map((link, index) => (
-        <Link
-          key={index}
-          href={link.href}
-          className="cursor-pointer text-sm text-muted-foreground underline duration-300 hover:text-primary"
-        >
-          {link.name}
-        </Link>
-      ))}
+    <div className="grid gap-2">
+      <div className="mt-8 flex flex-wrap items-center gap-2 rounded bg-secondary p-4">
+        {links.map((link, index) => (
+          <Link
+            key={index}
+            href={link.href}
+            className="cursor-pointer text-sm text-muted-foreground underline duration-300 hover:text-primary"
+          >
+            {link.name}
+          </Link>
+        ))}
+      </div>
+
+      <p className="text-center text-sm">
+        Todos direitos reservados © LhamaTech2024
+      </p>
     </div>
   )
 }
