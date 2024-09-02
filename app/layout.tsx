@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import Bottomtab from "@/components/bottom-tab"
 import Header from "@/components/header"
 import AuthProvider from "@/providers/auth"
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: "TrocaStore",
@@ -27,6 +28,8 @@ export default function RootLayout({
           >
             <Header />
             <main className="pb-16 pt-16 lg:pb-0">{children}</main>
+            <Toaster />
+
             <Bottomtab />
           </ThemeProvider>
         </AuthProvider>

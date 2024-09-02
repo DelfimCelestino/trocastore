@@ -1,13 +1,28 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "./ui/button"
-import { Camera, LogInIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import SignInDialog from "@/components/sign-in-dialog"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Camera, LogInIcon, LogOutIcon } from "lucide-react"
 import { signOut, useSession } from "next-auth/react"
-import { Dialog, DialogContent } from "./ui/dialog"
-import { DialogTrigger } from "@radix-ui/react-dialog"
-import SignInDialog from "./sign-in-dialog"
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 const Header = () => {
   const { data } = useSession()
   const handleLogoutClick = () => signOut()
@@ -18,20 +33,39 @@ const Header = () => {
       </Link>
 
       <div className="flex items-center gap-4">
-        <Button variant={"outline"} size={"icon"}>
-          <Camera className="h-6 w-6" />
+        <Button asChild variant={"outline"} size={"icon"}>
+          <Link href={"/post"}>
+            <Camera className="h-6 w-6" />
+          </Link>
         </Button>
 
         {data?.user ? (
           <>
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar>
+                  <AvatarImage src={data?.user?.image ?? ""} />
+                  <AvatarFallback>{data.user.name?.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <p className="truncate text-xs text-muted-foreground">
+                  {data?.user.name}
+                </p>{" "}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogoutClick}>
+                  <LogOutIcon className="mr-2 h-4 w-4" />
+                  <span>Terminar sessão</span>
+                  <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </>
         ) : (
           <>
-            <h2 className="font-bold">Olá, faça seu login!</h2>
+            <h2 className="text-xs font-bold lg:text-sm">
+              Olá, faça seu login!
+            </h2>
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant={"outline"} size="icon">
