@@ -6,10 +6,11 @@ import Link from "next/link"
 import { LinkIcon, X } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import { useState } from "react"
-import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
-import Editor from "@/components/editor"
 
+import dynamic from "next/dynamic"
+
+const Editor = dynamic(() => import("@/components/editor"), { ssr: false })
 const post = [
   "https://techrecomenda.com/wp-content/uploads/2024/06/Design-sem-nome-12.jpg",
   "https://workspace.com.pk/wp-content/uploads/2023/03/gaming-chair-post-07-700x700-1.jpg",
