@@ -30,7 +30,7 @@ const Editor = ({ text, setText }: EditorProps = {}) => {
         ],
       },
 
-      placeholder: "Escreva algo...",
+      placeholder: "Escreva algo aqui...",
     }
 
     const quill = new Quill(editorContainer, options)
