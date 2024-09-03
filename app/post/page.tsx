@@ -1,14 +1,12 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { CameraIcon, X } from "lucide-react"
+import { X } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { CldUploadButton } from "next-cloudinary"
-
+import { CldUploadWidget } from "next-cloudinary"
 import dynamic from "next/dynamic"
 
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false })
@@ -21,47 +19,67 @@ interface Image {
 const Post = () => {
   const [progress, setProgress] = useState(50)
   const [text, setText] = useState("")
+  const [images, setImages] = useState<Image[]>([])
   const maxImages = 5 // Limite de imagens
 
-  const [images, setImages] = useState<Image[]>([])
+  const handleAddImage = async (result: any) => {
+    const uploadedImages = Array.isArray(result.info.files)
+      ? result.info.files
+      : [result.info]
 
-  const handleAddImage = (result: any) => {
-    const uploadedImages = result.info.files || [result.info]
-
-    // Preparar novas imagens para adicionar
     const newImages: Image[] = uploadedImages.map((file: any) => ({
       url: file.secure_url,
       publicId: file.public_id,
     }))
 
-    // Log para verificar o que está sendo recebido
-    console.log("New Images:", newImages)
-
     setImages((prevImages) => {
-      const existingImageUrls = new Set(prevImages.map((img) => img.url))
-
-      // Log para verificar imagens já existentes
-      console.log("Existing Image URLs:", existingImageUrls)
-
-      const filteredNewImages = newImages.filter(
-        (img) => !existingImageUrls.has(img.url),
+      const uniqueImages = newImages.filter(
+        (img) =>
+          !prevImages.some((prevImg) => prevImg.publicId === img.publicId),
       )
 
-      // Log para verificar novas imagens filtradas
-      console.log("Filtered New Images:", filteredNewImages)
+      let updatedImages = [...prevImages, ...uniqueImages]
 
-      if (filteredNewImages.length + prevImages.length > maxImages) {
-        alert("Você atingiu o limite máximo de imagens.")
-        return prevImages
+      if (updatedImages.length > maxImages) {
+        // Identifica as imagens que precisam ser removidas
+        const imagesToRemove = updatedImages.slice(
+          0,
+          updatedImages.length - maxImages,
+        )
+
+        // Remove as imagens mais antigas do servidor
+        imagesToRemove.forEach(async (image) => {
+          try {
+            await deleteImage(image.publicId) // Chama deleteImage e aguarda sua conclusão
+            console.log(`Imagem removida: ${image.publicId}`)
+          } catch (error) {
+            console.error(`Erro ao remover a imagem ${image.publicId}:`, error)
+          }
+        })
+
+        // Mantém apenas as últimas maxImages imagens
+        updatedImages = updatedImages.slice(-maxImages)
+
+        if (progress > 50) {
+          setProgress(50)
+        }
+        toast.info(
+          "Limite de imagens atingido. As imagens mais antigas foram excluídas.",
+        )
       }
 
-      // Log para verificar as imagens que serão adicionadas
-      console.log("Images to be added:", [...prevImages, ...filteredNewImages])
-
-      return [...prevImages, ...filteredNewImages]
+      return updatedImages
     })
   }
 
+  const handleWidgetUpload = (result: any) => {
+    if (result.event === "success") {
+      console.log("Upload bem-sucedido:", result.info)
+      handleAddImage(result)
+    } else {
+      console.error("Erro no upload:", result)
+    }
+  }
   const deleteImage = async (publicId: string) => {
     try {
       const response = await fetch("/api/delete-images", {
@@ -80,12 +98,27 @@ const Post = () => {
     }
   }
 
-  const handleCancelUpload = () => {
-    images.forEach((image) => {
-      deleteImage(image.publicId)
-    })
-    setImages([]) // Clear the images array
-  }
+  useEffect(() => {
+    const deleteImagesOnExit = async () => {
+      for (const image of images) {
+        await deleteImage(image.publicId)
+      }
+    }
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      event.returnValue = "Você tem alterações não salvas. Deseja sair?"
+
+      deleteImagesOnExit()
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload)
+      deleteImagesOnExit()
+    }
+  }, [])
 
   const handleProgress = () => {
     setProgress(progress + 50)
@@ -94,7 +127,6 @@ const Post = () => {
   const handleRevert = () => {
     setProgress(progress - 50)
   }
-
   const handleRemoveImage = (index: number) => {
     const imageToRemove = images[index]
     deleteImage(imageToRemove.publicId)
@@ -109,29 +141,6 @@ const Post = () => {
     }, 400)
   }
 
-  useEffect(() => {
-    const deleteImagesOnExit = async () => {
-      for (const image of images) {
-        await deleteImage(image.publicId) // Exclui cada imagem usando o publicId
-      }
-    }
-
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault()
-      event.returnValue = "Você tem alterações não salvas. Deseja sair?"
-
-      // Tenta excluir imagens ao sair da página
-      deleteImagesOnExit()
-    }
-
-    window.addEventListener("beforeunload", handleBeforeUnload)
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload)
-      handleCancelUpload() // Garante que imagens sejam removidas ao cancelar a ação
-    }
-  }, [images])
-
   return (
     <div className="wrapper">
       <div className="grid gap-2">
@@ -145,18 +154,14 @@ const Post = () => {
         {progress < 100 ? (
           <>
             <h1 className="font-bold">Adicionar imagens</h1>
-            <CldUploadButton
-              className="flex w-full items-center justify-center gap-2 rounded bg-red-500 p-2 text-white"
+            <CldUploadWidget
               uploadPreset="trocastore_upload"
-              options={{
-                resourceType: "image",
-                maxFiles: maxImages - images.length,
-              }} // Restringir a uploads de imagens
-              onUpload={handleAddImage}
+              onSuccess={handleWidgetUpload}
             >
-              <CameraIcon className="h-6 w-6" /> Carregar imagens
-            </CldUploadButton>
-
+              {({ open }) => (
+                <Button onClick={() => open()}>Carregar imagens</Button>
+              )}
+            </CldUploadWidget>
             <div className="mt-10 grid gap-2">
               {images.map((item, index) => (
                 <div
@@ -190,7 +195,7 @@ const Post = () => {
           <Button asChild variant={"outline"}>
             <Link href={"/"}>Sair</Link>
           </Button>
-          <Button onClick={handleProgress}>Avancar</Button>
+          <Button onClick={handleProgress}>Avançar</Button>
         </div>
       ) : (
         <div className="fixed bottom-0 left-0 right-0 flex h-16 items-center justify-between border-t px-4">
