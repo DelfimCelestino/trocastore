@@ -46,11 +46,13 @@ const Search = async ({ params }: { params: { query: string } }) => {
       <SearchComponent />
       {/* <QuickSearchComponent /> */}
       <p className="my-4 text-sm text-gray-400">Resutados para: {query}</p>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {results.map((item, index) => (
-          <CardProduct key={index} item={item} />
-        ))}
-      </div>
+      {results.length > 0 && (
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {results.map((item, index) => (
+            <CardProduct key={index} item={item} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

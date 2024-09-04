@@ -27,7 +27,14 @@ const CardProduct = ({ item }: AvailableItem) => {
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
   const [count, setCount] = React.useState(0)
-  const truncatedContent = truncateHTML(item.content, 56)
+  const [truncatedContent, setTruncatedContent] = React.useState<string>("")
+
+  // Atualiza o conteúdo truncado somente no lado do cliente
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      setTruncatedContent(truncateHTML(item.content, 56))
+    }
+  }, [item.content])
 
   React.useEffect(() => {
     if (!api) return
@@ -76,7 +83,9 @@ const CardProduct = ({ item }: AvailableItem) => {
             </p> */}
             <h1 className="truncate font-bold uppercase">{item.name}</h1>
 
-            <div dangerouslySetInnerHTML={{ __html: truncatedContent }} />
+            {truncatedContent && (
+              <div dangerouslySetInnerHTML={{ __html: truncatedContent }} />
+            )}
             {/* 
             <p>{item.content}</p> */}
           </div>

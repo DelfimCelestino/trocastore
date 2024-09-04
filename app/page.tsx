@@ -17,11 +17,13 @@ const Home = async () => {
     <div className="wrapper">
       <SearchComponent />
       <QuickSearchComponent />
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {products.map((item) => (
-          <CardProduct key={item.id} item={item} />
-        ))}
-      </div>
+      {products.length > 0 && (
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {products.map((item) => (
+            <CardProduct key={item.id} item={item} />
+          ))}
+        </div>
+      )}
       <Footer />
     </div>
   )
