@@ -54,7 +54,6 @@ const Editor = ({ text, setText }: EditorProps = {}) => {
 
   return (
     <div className="flex flex-col overflow-hidden rounded-md border border-slate-50">
-      {text}
       <div ref={containerRef} className="ql-custom h-full" />
     </div>
   )

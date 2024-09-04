@@ -11,15 +11,9 @@ import { signOut, useSession } from "next-auth/react"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -33,11 +27,13 @@ const Header = () => {
       </Link>
 
       <div className="flex items-center gap-4">
-        <Button asChild variant={"outline"} size={"icon"}>
-          <Link href={"/post"}>
-            <Camera className="h-6 w-6" />
-          </Link>
-        </Button>
+        {data?.user && (
+          <Button asChild variant={"outline"} size={"icon"}>
+            <Link href={"/post"}>
+              <Camera className="h-6 w-6" />
+            </Link>
+          </Button>
+        )}
 
         {data?.user ? (
           <>
