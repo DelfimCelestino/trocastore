@@ -61,6 +61,11 @@ const CardProduct = ({ item }: { item: AvailableItem }) => {
               {current} de {count}
             </div>
           )}
+          {item.offer && (
+            <div className="absolute left-2 top-2">
+              <Badge className="bg-green-500 text-zinc-50">Ofertando</Badge>
+            </div>
+          )}
         </Carousel>
         <CardContent>
           <div className="grid gap-1 py-3">
@@ -74,11 +79,6 @@ const CardProduct = ({ item }: { item: AvailableItem }) => {
                 ? item.description.substring(0, 56) + "..."
                 : item.description}
             </p>
-            {item.offer && (
-              <div>
-                <Badge className="bg-green-500 text-zinc-50">Ofertando</Badge>
-              </div>
-            )}
           </div>
         </CardContent>
       </Card>
