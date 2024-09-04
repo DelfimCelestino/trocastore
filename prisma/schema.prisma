@@ -87,15 +87,17 @@ model Authenticator {
 model Products {
   id            String          @id @default(uuid())
   name          String
+  slug          String          @unique
   content       String          @db.LongText
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  offer         Boolean         @default(false)
   user          User            @relation(fields: [userId], references: [id])
   userId        String
-  PorductImages PorductImages[]
+  PorductImages ProductImages[]
 }
 
-model PorductImages {
+model ProductImages {
   id        String   @id @default(uuid())
   url       String   @db.LongText
   publicId  String
